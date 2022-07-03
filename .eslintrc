@@ -1,0 +1,33 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest/globals": true
+    },
+    "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["react", "jest", "@typescript-eslint"],
+    "rules": {
+        "import/no-extraneous-dependencies": [
+            "error",
+            { "devDependencies": ["**/*.test.ts", "**/*.test.tsx"] }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": "off",
+        "no-shadow": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error"
+    }
+}
