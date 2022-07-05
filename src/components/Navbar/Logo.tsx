@@ -1,12 +1,13 @@
-import { Icon } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { Icon, useTheme } from '@mui/material';
 import { IoStorefrontSharp } from 'react-icons/io5';
 
 export default function Logo() {
+  const theme = useTheme();
+
   return (
     <Icon
       component={IoStorefrontSharp}
-      sx={{ fontSize: '3rem', color: grey[900] }}
+      sx={{ fontSize: '3rem', color: theme.palette.text.primary }}
     />
   );
 }

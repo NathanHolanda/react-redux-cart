@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Box, Container, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
@@ -20,10 +20,19 @@ export default function Products() {
     getProducts().then((products) => setProducts(products));
   }, []);
 
+  const theme = useTheme();
+
   return (
-    <>
+    <Box sx={{ width: '100%', backgroundColor: theme.palette.primary.main }}>
       <Navbar />
-      <Container sx={{ p: '2rem', width: '100%' }}>
+      <Container
+        component="main"
+        sx={{
+          backgroundColor: theme.palette.primary.main,
+          p: '2rem',
+          width: '100%',
+        }}
+      >
         <Grid m="auto" justifyContent="center" container spacing={2}>
           {products.length > 0 &&
             products.map((product) => (
@@ -37,6 +46,6 @@ export default function Products() {
             ))}
         </Grid>
       </Container>
-    </>
+    </Box>
   );
 }

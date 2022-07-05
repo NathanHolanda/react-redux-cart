@@ -1,6 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 import Link from '@mui/material/Link';
-import { grey } from '@mui/material/colors';
+import { Link as RouterLink } from 'react-router-dom';
 
 type LinkProps = {
   url: string;
@@ -8,11 +8,13 @@ type LinkProps = {
 };
 
 export default function LinkComponent({ url, name }: LinkProps) {
+  const theme = useTheme();
+
   return (
     <Link
       component={RouterLink}
       to={url}
-      color={grey[700]}
+      color={theme.palette.text.secondary}
       fontWeight="700"
       fontSize="1.5rem"
       sx={{

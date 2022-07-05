@@ -6,8 +6,10 @@ import {
   CardMedia,
   Grid,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { IoMdCart } from 'react-icons/io';
+import styles from './styles.module.css';
 
 type ProductCardProps = {
   title: string;
@@ -22,12 +24,15 @@ export default function ProductCard({
   price,
   thumbnail,
 }: ProductCardProps) {
+  const theme = useTheme();
+
   return (
     <Grid p={4} item>
       <Card
         sx={{
           maxWidth: '300px',
           boxShadow: '-2px 2px 10px 0px #0006',
+          backgroundColor: theme.palette.secondary.main,
         }}
       >
         <CardMedia
@@ -49,12 +54,18 @@ export default function ProductCard({
               fontSize: '1.5rem',
               fontWeight: 'bold',
               marginBottom: '1rem',
+              color: theme.palette.text.primary,
             }}
           >
             {title}
           </Typography>
           <Typography
-            sx={{ fontWeight: 'bold', fontSize: '1rem', marginBottom: '.5rem' }}
+            sx={{
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              marginBottom: '.5rem',
+              color: theme.palette.text.primary,
+            }}
           >
             {Intl.NumberFormat('en-US', {
               style: 'currency',
@@ -62,10 +73,11 @@ export default function ProductCard({
             }).format(price)}
           </Typography>
           <Typography
-            className="product-description"
+            className={styles.productDescription}
             sx={{
               fontSize: '1rem',
               height: '4.25rem',
+              color: theme.palette.text.primary,
             }}
           >
             {description}
