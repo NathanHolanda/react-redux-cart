@@ -3,6 +3,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Products from './pages/Products';
+import './styles.css';
 
 function App() {
   return (

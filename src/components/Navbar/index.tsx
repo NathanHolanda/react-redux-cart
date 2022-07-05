@@ -12,6 +12,7 @@ export default function Navbar() {
       alignItems="center"
       justifyContent="center"
       p={4}
+      mb={4}
       borderBottom={`.125rem ${grey[500]} solid`}
       sx={{ backgroundColor: grey[200] }}
     >
