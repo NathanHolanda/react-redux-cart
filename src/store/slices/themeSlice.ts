@@ -16,6 +16,13 @@ export const themeSlice = createSlice({
     changeTheme: (state) => {
       if (state.value === 'light') state.value = 'dark';
       else state.value = 'light';
+
+      localStorage.setItem('reactReduxCart.cart', JSON.stringify(state));
+    },
+    setInitialState(state) {
+      const json = localStorage.getItem('reactReduxCart.cart');
+
+      if (json) state.value = JSON.parse(json).value ?? 'light';
     },
   },
 });
