@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { ThemeProvider } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Products from './pages/Products';
@@ -22,6 +23,9 @@ function App() {
             margin: 0,
             boxSizing: 'border-box',
             fontFamily: '"Roboto", sans-serif',
+          },
+          body: {
+            backgroundColor: themeType === 'light' ? grey[100] : grey[900],
           },
         }}
       />

@@ -16,6 +16,7 @@ const dark = createTheme({
     success: {
       main: '#4caf50',
     },
+    /* background: { default: grey[900] }, */
   },
 });
 

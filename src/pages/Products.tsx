@@ -28,7 +28,6 @@ export default function Products() {
       <Container
         component="main"
         sx={{
-          backgroundColor: theme.palette.primary.main,
           p: '2rem',
           width: '100%',
         }}

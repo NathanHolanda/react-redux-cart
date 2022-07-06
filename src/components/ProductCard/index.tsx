@@ -1,15 +1,17 @@
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   Grid,
+  TextField,
   Typography,
   useTheme,
 } from '@mui/material';
 import { IoMdCart } from 'react-icons/io';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 type ProductCardProps = {
   title: string;
@@ -53,25 +55,42 @@ export default function ProductCard({
             sx={{
               fontSize: '1.5rem',
               fontWeight: 'bold',
-              marginBottom: '1rem',
               color: theme.palette.text.primary,
             }}
           >
             {title}
           </Typography>
-          <Typography
-            sx={{
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              marginBottom: '.5rem',
-              color: theme.palette.text.primary,
-            }}
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            marginY="1rem"
           >
-            {Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            }).format(price)}
-          </Typography>
+            <Typography
+              sx={{
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                color: theme.palette.text.primary,
+              }}
+            >
+              {Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              }).format(price)}
+            </Typography>
+            <TextField
+              className={styles.numberField}
+              label="Quant."
+              type="number"
+              inputProps={{
+                border: '4px solid black',
+                min: 1,
+                step: 1,
+                defaultValue: 1,
+              }}
+              sx={{ width: '4rem' }}
+            />
+          </Box>
           <Typography
             className={styles.productDescription}
             sx={{

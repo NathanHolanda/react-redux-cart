@@ -4,3 +4,13 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+.numberField{
+  & input{
+    height: .125rem
+  }
+
+  & fieldset{
+    border-color: inherit;
+  }
+}
