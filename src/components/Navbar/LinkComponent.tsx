@@ -5,9 +5,10 @@ import { Link as RouterLink } from 'react-router-dom';
 type LinkProps = {
   url: string;
   name: string;
+  active: boolean;
 };
 
-export default function LinkComponent({ url, name }: LinkProps) {
+export default function LinkComponent({ url, name, active }: LinkProps) {
   const theme = useTheme();
 
   return (
@@ -18,7 +19,8 @@ export default function LinkComponent({ url, name }: LinkProps) {
       fontWeight="700"
       fontSize="1.5rem"
       sx={{
-        textDecoration: 'none',
+        textDecoration: active ? 'underline' : 'none',
+        textDecorationColor: active ? theme.palette.success.main : 'none',
         transition: '.2s',
         '&:hover': { opacity: '.6' },
         '&:not(:last-of-type)': { marginRight: '1rem' },

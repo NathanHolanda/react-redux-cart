@@ -1,10 +1,13 @@
 import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
+import { useLocation } from 'react-router-dom';
 import LinkComponent from './LinkComponent';
 import Logo from './Logo';
 import ThemeSwitch from './ThemeSwitch';
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+
   return (
     <Box
       component="nav"
@@ -16,8 +19,12 @@ export default function Navbar() {
       <Box margin="auto" display="flex" alignItems="center">
         <Logo />
         <Box marginLeft="4rem">
-          <LinkComponent url="/" name="Products" />
-          <LinkComponent url="/cart" name="Cart" />
+          <LinkComponent active={pathname === '/'} url="/" name="Products" />
+          <LinkComponent
+            active={pathname === '/cart'}
+            url="/cart"
+            name="Cart"
+          />
         </Box>
       </Box>
       <ThemeSwitch sx={{ justifySelf: 'flex-end' }} />

@@ -1,18 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer, { counterSlice } from './slices/counterSlice';
 import themeReducer, { themeSlice } from './slices/themeSlice';
 import cartReducer, { cartSlice } from './slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     theme: themeReducer,
     cart: cartReducer,
   },
 });
 
 export const actions = {
-  ...counterSlice.actions,
   ...themeSlice.actions,
   ...cartSlice.actions,
 };

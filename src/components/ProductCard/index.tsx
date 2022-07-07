@@ -43,12 +43,13 @@ export default function ProductCard({
     const product = {
       id,
       title,
+      thumbnail,
       quantity,
       price,
       subtotal,
     };
 
-    dispatch(actions.insertProduct(product));
+    dispatch(actions.insertCartProduct(product));
   };
 
   return (
@@ -69,7 +70,6 @@ export default function ProductCard({
         <CardContent
           sx={{
             p: 3,
-            maxWidth: '20rem',
             height: '12rem',
           }}
         >
@@ -112,7 +112,9 @@ export default function ProductCard({
                 min: 1,
                 step: 1,
               }}
-              sx={{ width: '4rem' }}
+              sx={{
+                width: '4rem',
+              }}
             />
           </Box>
           <Typography
@@ -132,6 +134,7 @@ export default function ProductCard({
             color="success"
             variant="outlined"
             endIcon={<IoMdCart />}
+            sx={{ fontWeight: 'bold' }}
           >
             Add to cart
           </Button>

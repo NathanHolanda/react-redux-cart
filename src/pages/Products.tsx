@@ -1,4 +1,4 @@
-import { Container, useTheme } from '@mui/material';
+import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
@@ -26,8 +26,7 @@ export default function Products() {
       <Container
         component="main"
         sx={{
-          p: '2rem',
-          width: '100%',
+          p: '4rem',
         }}
       >
         <Grid m="auto" justifyContent="center" container spacing={2}>
