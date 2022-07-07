@@ -1,4 +1,4 @@
-import { Box, Container, useTheme } from '@mui/material';
+import { Container, useTheme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
@@ -20,10 +20,8 @@ export default function Products() {
     getProducts().then((products) => setProducts(products));
   }, []);
 
-  const theme = useTheme();
-
   return (
-    <Box sx={{ width: '100%', backgroundColor: theme.palette.primary.main }}>
+    <>
       <Navbar />
       <Container
         component="main"
@@ -37,6 +35,7 @@ export default function Products() {
             products.map((product) => (
               <ProductCard
                 key={product.id}
+                id={product.id}
                 title={product.title}
                 description={product.description}
                 price={product.price}
@@ -45,6 +44,6 @@ export default function Products() {
             ))}
         </Grid>
       </Container>
-    </Box>
+    </>
   );
 }

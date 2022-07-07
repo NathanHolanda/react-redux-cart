@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import GlobalStyles from '@mui/material/GlobalStyles';
-import { ThemeProvider } from '@mui/material';
+import { Box, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { useEffect } from 'react';
 import Cart from './pages/Cart';
@@ -38,11 +38,13 @@ function App() {
           },
         }}
       />
-      <Routes>
-        <Route path="/" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
+      <Box sx={{ width: '100%', backgroundColor: theme.palette.primary.main }}>
+        <Routes>
+          <Route path="/" element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+        </Routes>
+      </Box>
     </ThemeProvider>
   );
 }

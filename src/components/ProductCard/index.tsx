@@ -10,10 +10,14 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { useState } from 'react';
 import { IoMdCart } from 'react-icons/io';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import { actions } from '../../store';
 import styles from './styles.module.scss';
 
 type ProductCardProps = {
+  id: number;
   title: string;
   description: string;
   price: number;
@@ -21,12 +25,31 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({
+  id,
   title,
   description,
   price,
   thumbnail,
 }: ProductCardProps) {
   const theme = useTheme();
+
+  const [quantity, setQuantity] = useState<number>(1);
+
+  const dispatch = useAppDispatch();
+
+  const addToCart = () => {
+    const subtotal = quantity * price;
+
+    const product = {
+      id,
+      title,
+      quantity,
+      price,
+      subtotal,
+    };
+
+    dispatch(actions.insertProduct(product));
+  };
 
   return (
     <Grid p={4} item>
@@ -82,11 +105,12 @@ export default function ProductCard({
               className={styles.numberField}
               label="Quant."
               type="number"
+              value={quantity}
+              onChange={(event) => setQuantity(+event.target.value)}
               inputProps={{
                 border: '4px solid black',
                 min: 1,
                 step: 1,
-                defaultValue: 1,
               }}
               sx={{ width: '4rem' }}
             />
@@ -103,7 +127,12 @@ export default function ProductCard({
           </Typography>
         </CardContent>
         <CardActions sx={{ mt: 4, p: 4, justifyContent: 'center' }}>
-          <Button color="success" variant="outlined" endIcon={<IoMdCart />}>
+          <Button
+            onClick={() => addToCart()}
+            color="success"
+            variant="outlined"
+            endIcon={<IoMdCart />}
+          >
             Add to cart
           </Button>
         </CardActions>
