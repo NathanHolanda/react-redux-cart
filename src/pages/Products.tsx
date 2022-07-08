@@ -18,7 +18,7 @@ export default function Products() {
 
   useEffect(() => {
     getProducts().then((products) => setProducts(products));
-  }, []);
+  }, [getProducts]);
 
   return (
     <>

@@ -13,7 +13,7 @@ export default function CartComponent() {
 
   useEffect(() => {
     setCart(cartState);
-  }, []);
+  }, [cartState]);
 
   const theme = useTheme();
 
@@ -36,6 +36,7 @@ export default function CartComponent() {
             >
               {cart.products.map((product) => (
                 <CartProductCard
+                  key={product.id}
                   title={product.title}
                   quantity={product.quantity}
                   subtotal={product.subtotal}

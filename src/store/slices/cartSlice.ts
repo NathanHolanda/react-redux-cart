@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
+import firebaseApi from '../../services/firebaseApi';
 
 type Product = {
   id: number;
@@ -47,6 +48,13 @@ export const cartSlice = createSlice({
 
         return accum;
       }, 0);
+
+      firebaseApi.put('/cart.json', state.value).catch((err) => {
+        throw err;
+      });
+    },
+    setCartInitialState: (state, action) => {
+      state.value = action.payload;
     },
   },
 });

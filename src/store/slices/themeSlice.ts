@@ -19,7 +19,7 @@ export const themeSlice = createSlice({
 
       localStorage.setItem('reactReduxCart.cart', JSON.stringify(state));
     },
-    setInitialState(state) {
+    setThemeInitialState(state) {
       const json = localStorage.getItem('reactReduxCart.cart');
 
       if (json) state.value = JSON.parse(json).value ?? 'light';

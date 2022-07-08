@@ -1,24 +1,32 @@
-import { Routes, Route } from 'react-router-dom';
-import GlobalStyles from '@mui/material/GlobalStyles';
 import { Box, ThemeProvider } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { useEffect } from 'react';
+import GlobalStyles from '@mui/material/GlobalStyles';
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import useAppDispatch from './hooks/useAppDispatch';
+import useAppSelector from './hooks/useAppSelector';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Products from './pages/Products';
-import light from './themes/light';
-import dark from './themes/dark';
-import useAppSelector from './hooks/useAppSelector';
-import { selectTheme } from './store/slices/themeSlice';
-import useAppDispatch from './hooks/useAppDispatch';
 import { actions } from './store';
+import fetchCartInitialState from './store/slices/cartActions';
+import { selectTheme } from './store/slices/themeSlice';
+import dark from './themes/dark';
+import light from './themes/light';
 
 function App() {
+  const [isFirstRendering, setIsFirstRendering] = useState<boolean>(true);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(actions.setInitialState());
-  });
+    if (isFirstRendering) {
+      dispatch(actions.setThemeInitialState());
+      dispatch(fetchCartInitialState());
+
+      setIsFirstRendering(false);
+    }
+  }, [dispatch]);
 
   const themeType = useAppSelector(selectTheme);
   const theme = themeType === 'light' ? light : dark;
