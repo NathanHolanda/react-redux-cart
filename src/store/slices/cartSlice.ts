@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
 import firebaseApi from '../../services/firebaseApi';
 
-type Product = {
+export type Product = {
   id: number;
   title: string;
   thumbnail: string;
@@ -11,20 +11,16 @@ type Product = {
   subtotal: number;
 };
 
-export type Cart = {
+export type CartState = {
   products: Product[];
   total: number;
-};
-
-type CartState = {
-  value: Cart;
+  isFetched: boolean;
 };
 
 const initialState: CartState = {
-  value: {
-    products: [],
-    total: 0,
-  },
+  products: [],
+  total: 0,
+  isFetched: false,
 };
 
 export const cartSlice = createSlice({
@@ -35,30 +31,32 @@ export const cartSlice = createSlice({
     insertCartProduct: (state, action) => {
       const { id } = action.payload;
 
-      const existingProductIndex = state.value.products.findIndex(
+      const existingProductIndex = state.products.findIndex(
         (product) => product.id === id
       );
 
       if (existingProductIndex > 0)
-        state.value.products.splice(existingProductIndex, 1, action.payload);
-      else state.value.products.push(action.payload);
+        state.products.splice(existingProductIndex, 1, action.payload);
+      else state.products.push(action.payload);
 
-      state.value.total = state.value.products.reduce((accum, product) => {
+      state.total = state.products.reduce((accum, product) => {
         accum += product.subtotal;
 
         return accum;
       }, 0);
 
-      firebaseApi.put('/cart.json', state.value).catch((err) => {
+      firebaseApi.put('/cart.json', state).catch((err) => {
         throw err;
       });
     },
     setCartInitialState: (state, action) => {
-      state.value = action.payload;
+      state.products = action.payload.products;
+      state.total = action.payload.total;
+      state.isFetched = true;
     },
   },
 });
 
-export const selectCart = (state: RootState) => state.cart.value;
+export const selectCart = (state: RootState) => state.cart;
 
 export default cartSlice.reducer;

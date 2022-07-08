@@ -5,17 +5,15 @@ import CartTotalPrice from '../components/CartTotalPrice';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
 import useAppSelector from '../hooks/useAppSelector';
-import { Cart, selectCart } from '../store/slices/cartSlice';
+import { CartState, selectCart } from '../store/slices/cartSlice';
 
 export default function CartComponent() {
-  const [cart, setCart] = useState<Cart>({ total: 0, products: [] });
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [cart, setCart] = useState({} as CartState);
 
   const cartState = useAppSelector(selectCart);
 
   useEffect(() => {
     setCart(cartState);
-    setIsLoading(false);
   }, [cartState]);
 
   const theme = useTheme();
@@ -28,23 +26,11 @@ export default function CartComponent() {
           p: '4rem',
         }}
       >
-        {isLoading && (
+        {!cart.isFetched ? (
           <Box display="flex" justifyContent="center" mt="10rem">
             <Spinner />
           </Box>
-        )}
-        {cart.total <= 0 && !isLoading ? (
-          <Box>
-            <Typography
-              textAlign="center"
-              fontSize="2rem"
-              mt="10rem"
-              color={theme.palette.text.primary}
-            >
-              Não há nenhum produto no carrinho 😕
-            </Typography>
-          </Box>
-        ) : (
+        ) : cart.total > 0 ? (
           <>
             <CartTotalPrice total={cart.total} />
             <Box
@@ -64,6 +50,17 @@ export default function CartComponent() {
               ))}
             </Box>
           </>
+        ) : (
+          <Box>
+            <Typography
+              textAlign="center"
+              fontSize="2rem"
+              mt="10rem"
+              color={theme.palette.text.primary}
+            >
+              Não há nenhum produto no carrinho 😕
+            </Typography>
+          </Box>
         )}
       </Container>
     </>

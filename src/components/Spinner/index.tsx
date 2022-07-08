@@ -1,6 +1,6 @@
-import { Box, BoxProps, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
-const Spinner = styled(Box)<BoxProps>(({ theme }) => ({
+const Spinner = styled(Box)(({ theme }) => ({
   position: 'relative',
   width: '3rem',
   height: '3rem',

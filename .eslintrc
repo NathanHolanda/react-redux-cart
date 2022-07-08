@@ -28,6 +28,7 @@
     "@typescript-eslint/no-explicit-any": "off",
     "no-param-reassign": "off",
     "react/jsx-props-no-spreading": "off",
+    "no-nested-ternary": "off",
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
     "jest/no-identical-title": "error",
