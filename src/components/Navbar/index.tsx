@@ -11,7 +11,8 @@ export default function Navbar() {
   return (
     <Box
       component="nav"
-      width="100%"
+      maxWidth="1200px"
+      margin="0 auto"
       display="flex"
       p={4}
       borderBottom={`.125rem ${grey[500]} solid`}
