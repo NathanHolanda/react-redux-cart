@@ -5,7 +5,8 @@ export default function fetchCartInitialState() {
   return async (dispatch: AppDispatch) => {
     try {
       const { data } = await firebaseApi.get('/cart.json');
-      return dispatch(actions.setCartInitialState(data));
+      if (data) return dispatch(actions.setCartInitialState(data));
+      throw new Error('No data.');
     } catch (err) {
       return 0;
     }
