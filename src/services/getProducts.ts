@@ -13,8 +13,6 @@ const getProducts = async () => {
     data: { products },
   } = await axios.get('https://dummyjson.com/products?limit=30');
 
-  // console.log(products);
-
   return products as Product[];
 };
 

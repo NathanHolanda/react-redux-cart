@@ -1,8 +1,9 @@
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
+import Spinner from '../components/Spinner';
 import getProducts from '../services/getProducts';
 
 type Product = {
@@ -30,7 +31,7 @@ export default function Products() {
         }}
       >
         <Grid m="auto" justifyContent="center" container spacing={2}>
-          {products.length > 0 &&
+          {products.length > 0 ? (
             products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -40,7 +41,12 @@ export default function Products() {
                 price={product.price}
                 thumbnail={product.thumbnail}
               />
-            ))}
+            ))
+          ) : (
+            <Box display="flex" justifyContent="center" mt="10rem">
+              <Spinner />
+            </Box>
+          )}
         </Grid>
       </Container>
     </>
