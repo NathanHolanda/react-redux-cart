@@ -1,13 +1,20 @@
 import {
+  Button,
   Card,
+  CardActions,
   CardContent,
   CardMedia,
   Typography,
   useTheme,
 } from '@mui/material';
+import { useCallback } from 'react';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import { actions } from '../../store';
 import styles from './styles.module.scss';
 
 type CartProductCardProps = {
+  id: number;
   title: string;
   thumbnail: string;
   quantity: number;
@@ -15,12 +22,22 @@ type CartProductCardProps = {
 };
 
 export default function index({
+  id,
   title,
   thumbnail,
   quantity,
   subtotal,
 }: CartProductCardProps) {
   const theme = useTheme();
+
+  const dispatch = useAppDispatch();
+
+  const removeProduct = useCallback(
+    (id: number) => {
+      dispatch(actions.removeCartProduct({ id }));
+    },
+    [actions.removeCartProduct]
+  );
 
   return (
     <Card
@@ -56,6 +73,15 @@ export default function index({
           }).format(subtotal)}
         </Typography>
       </CardContent>
+      <CardActions sx={{ marginLeft: 'auto' }}>
+        <Button
+          onClick={() => removeProduct(id)}
+          sx={{ fontSize: '2rem' }}
+          color="error"
+        >
+          <RiDeleteBin5Line />
+        </Button>
+      </CardActions>
     </Card>
   );
 }

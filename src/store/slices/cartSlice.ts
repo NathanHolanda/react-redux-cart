@@ -27,7 +27,25 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    removeCartProduct: () => {},
+    removeCartProduct: (state, action) => {
+      const { id } = action.payload;
+
+      const filterById = (product: Product) => product.id === id;
+
+      const itemToBeRemoved = state.products.find(filterById);
+      const itemIndexToBeRemoved = state.products.findIndex(filterById);
+
+      if (itemToBeRemoved) {
+        state.total -= itemToBeRemoved.subtotal;
+        state.products.splice(itemIndexToBeRemoved, 1);
+      }
+
+      firebaseApi
+        .put('/cart.json', { total: state.total, products: state.products })
+        .catch((err) => {
+          throw err;
+        });
+    },
     insertCartProduct: (state, action) => {
       const { id } = action.payload;
 
@@ -45,9 +63,11 @@ export const cartSlice = createSlice({
         return accum;
       }, 0);
 
-      firebaseApi.put('/cart.json', state).catch((err) => {
-        throw err;
-      });
+      firebaseApi
+        .put('/cart.json', { total: state.total, products: state.products })
+        .catch((err) => {
+          throw err;
+        });
     },
     setCartInitialState: (state, action) => {
       state.products = action.payload.products;

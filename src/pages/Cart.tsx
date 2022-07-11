@@ -42,6 +42,7 @@ export default function CartComponent() {
               {cart.products.map((product) => (
                 <CartProductCard
                   key={product.id}
+                  id={product.id}
                   title={product.title}
                   quantity={product.quantity}
                   subtotal={product.subtotal}
