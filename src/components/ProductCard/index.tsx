@@ -6,10 +6,12 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  styled,
   TextField,
   Typography,
   useTheme,
 } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import { useState } from 'react';
 import { IoMdCart } from 'react-icons/io';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -23,6 +25,33 @@ type ProductCardProps = {
   price: number;
   thumbnail: string;
 };
+
+const QuantityField = styled(TextField)(({ theme }) => ({
+  width: '4rem',
+
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.text.primary,
+  },
+
+  '& .MuiInputBase-input': { padding: '0' },
+
+  '& .MuiOutlinedInput-root': {
+    padding: '1rem .75rem',
+    height: '1.2rem',
+    borderColor: theme.palette.text.primary,
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: grey[500],
+    },
+  },
+
+  '& .MuiInputLabel-root': {
+    color: theme.palette.text.primary,
+
+    '&.Mui-focused': {
+      color: theme.palette.text.primary,
+    },
+  },
+}));
 
 export default function ProductCard({
   id,
@@ -101,19 +130,14 @@ export default function ProductCard({
                 currency: 'USD',
               }).format(price)}
             </Typography>
-            <TextField
-              className={styles.numberField}
+            <QuantityField
               label="Quant."
               type="number"
               value={quantity}
               onChange={(event) => setQuantity(+event.target.value)}
               inputProps={{
-                border: '4px solid black',
                 min: 1,
                 step: 1,
-              }}
-              sx={{
-                width: '4rem',
               }}
             />
           </Box>
