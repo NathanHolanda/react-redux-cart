@@ -11,7 +11,7 @@ import { useCallback } from 'react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { actions } from '../../store';
-import styles from './styles.module.scss';
+import styles from './styles.module.css';
 
 type CartProductCardProps = {
   id: number;

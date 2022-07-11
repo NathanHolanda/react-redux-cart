@@ -1,17 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer, { cartSlice } from './slices/cartSlice';
+import checkoutReducer, { checkoutSlice } from './slices/checkoutSlice';
 import themeReducer, { themeSlice } from './slices/themeSlice';
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
     cart: cartReducer,
+    checkout: checkoutReducer,
   },
 });
 
 export const actions = {
   ...themeSlice.actions,
   ...cartSlice.actions,
+  ...checkoutSlice.actions,
 };
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

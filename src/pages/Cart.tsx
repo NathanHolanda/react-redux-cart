@@ -1,15 +1,25 @@
-import { Box, Container, Typography, useTheme } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Box, Button, Container, Typography, useTheme } from '@mui/material';
+import { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CartProductCard from '../components/CartProductCard';
 import CartTotalPrice from '../components/CartTotalPrice';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
+import useAppDispatch from '../hooks/useAppDispatch';
 import useAppSelector from '../hooks/useAppSelector';
+import { actions } from '../store';
 import { CartState, selectCart } from '../store/slices/cartSlice';
 
-export default function CartComponent() {
-  const [cart, setCart] = useState({} as CartState);
+export default function Cart() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const handleEnableChekout = useCallback(() => {
+    dispatch(actions.enableCheckout());
 
+    navigate('/checkout');
+  }, [actions.enableCheckout]);
+
+  const [cart, setCart] = useState({} as CartState);
   const cartState = useAppSelector(selectCart);
 
   useEffect(() => {
@@ -49,6 +59,15 @@ export default function CartComponent() {
                   thumbnail={product.thumbnail}
                 />
               ))}
+            </Box>
+            <Box textAlign="right">
+              <Button
+                onClick={handleEnableChekout}
+                color="success"
+                sx={{ border: `${theme.palette.success.main} solid 1px` }}
+              >
+                Finalizar compra
+              </Button>
             </Box>
           </>
         ) : (

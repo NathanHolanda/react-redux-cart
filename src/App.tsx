@@ -9,7 +9,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Products from './pages/Products';
 import { actions } from './store';
-import fetchCartInitialState from './store/slices/cartActions';
+import fetchCartInitialState from './store/actions/cartActions';
 import { selectTheme } from './store/slices/themeSlice';
 import dark from './themes/dark';
 import light from './themes/light';

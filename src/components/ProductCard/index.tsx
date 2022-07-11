@@ -12,11 +12,11 @@ import {
   useTheme,
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IoMdCart } from 'react-icons/io';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { actions } from '../../store';
-import styles from './styles.module.scss';
+import styles from './styles.module.css';
 
 type ProductCardProps = {
   id: number;
@@ -66,7 +66,7 @@ export default function ProductCard({
 
   const dispatch = useAppDispatch();
 
-  const addToCart = () => {
+  const addToCart = useCallback(() => {
     const subtotal = quantity * price;
 
     const product = {
@@ -79,7 +79,7 @@ export default function ProductCard({
     };
 
     dispatch(actions.insertCartProduct(product));
-  };
+  }, [actions.insertCartProduct]);
 
   return (
     <Grid p={4} item>
