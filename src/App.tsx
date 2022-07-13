@@ -1,5 +1,4 @@
 import { Box, ThemeProvider } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -19,6 +18,9 @@ function App() {
 
   const dispatch = useAppDispatch();
 
+  const themeType = useAppSelector(selectTheme);
+  const theme = themeType === 'light' ? light : dark;
+
   useEffect(() => {
     if (isFirstRendering) {
       dispatch(actions.setThemeInitialState());
@@ -27,9 +29,6 @@ function App() {
       setIsFirstRendering(false);
     }
   }, [dispatch]);
-
-  const themeType = useAppSelector(selectTheme);
-  const theme = themeType === 'light' ? light : dark;
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,7 +41,7 @@ function App() {
             fontFamily: '"Roboto", sans-serif',
           },
           body: {
-            backgroundColor: themeType === 'light' ? grey[100] : grey[900],
+            backgroundColor: theme.palette.primary.main,
           },
         }}
       />

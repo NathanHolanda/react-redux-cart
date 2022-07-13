@@ -14,11 +14,9 @@ export default function Checkout() {
   }, []);
 
   return (
-    checkoutEnabled && (
-      <>
-        <Navbar />
-        <div>Checkout</div>
-      </>
-    )
+    <>
+      <Navbar />
+      {checkoutEnabled && <div>Checkout</div>}
+    </>
   );
 }
