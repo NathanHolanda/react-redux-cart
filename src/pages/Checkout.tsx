@@ -1,6 +1,8 @@
+import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import BasicLayout from '../components/BasicLayout';
+import CheckoutForm from '../components/Form/CheckoutForm';
 import useAppSelector from '../hooks/useAppSelector';
 import { selectCheckout } from '../store/slices/checkoutSlice';
 
@@ -15,8 +17,12 @@ export default function Checkout() {
 
   return (
     <>
-      <Navbar />
-      {checkoutEnabled && <div>Checkout</div>}
+      <Box />
+      {checkoutEnabled && (
+        <BasicLayout>
+          <CheckoutForm />
+        </BasicLayout>
+      )}
     </>
   );
 }

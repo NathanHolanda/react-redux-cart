@@ -59,7 +59,7 @@ export default function index({
       <CardContent>
         <Typography
           className={styles.productTitle}
-          component="h3"
+          component="h2"
           fontSize="1.3rem"
           fontWeight="bold"
         >

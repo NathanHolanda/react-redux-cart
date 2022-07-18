@@ -3,6 +3,7 @@ import { grey } from '@mui/material/colors';
 
 const light = createTheme({
   palette: {
+    mode: 'light',
     primary: {
       main: grey[100],
     },
@@ -12,6 +13,7 @@ const light = createTheme({
     text: {
       primary: grey[900],
       secondary: grey[700],
+      disabled: grey[500],
     },
     success: {
       main: '#1b5e20',

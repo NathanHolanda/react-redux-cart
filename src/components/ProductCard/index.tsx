@@ -5,7 +5,6 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Grid,
   styled,
   TextField,
   Typography,
@@ -82,88 +81,81 @@ export default function ProductCard({
   }, [actions.insertCartProduct]);
 
   return (
-    <Grid p={4} item>
-      <Card
+    <Card
+      sx={{
+        maxWidth: '300px',
+        boxShadow: '-2px 2px 10px 0px #0006',
+        backgroundColor: theme.palette.secondary.main,
+      }}
+    >
+      <CardMedia component="img" image={thumbnail} height="150px" alt={title} />
+      <CardContent
         sx={{
-          maxWidth: '300px',
-          boxShadow: '-2px 2px 10px 0px #0006',
-          backgroundColor: theme.palette.secondary.main,
+          p: 3,
+          height: '12rem',
         }}
       >
-        <CardMedia
-          component="img"
-          image={thumbnail}
-          height="150px"
-          alt={title}
-        />
-        <CardContent
+        <Typography
+          variant="h2"
           sx={{
-            p: 3,
-            height: '12rem',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: theme.palette.text.primary,
           }}
         >
+          {title}
+        </Typography>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          marginY="1rem"
+        >
           <Typography
-            variant="h3"
             sx={{
-              fontSize: '1.5rem',
               fontWeight: 'bold',
-              color: theme.palette.text.primary,
-            }}
-          >
-            {title}
-          </Typography>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            marginY="1rem"
-          >
-            <Typography
-              sx={{
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                color: theme.palette.text.primary,
-              }}
-            >
-              {Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              }).format(price)}
-            </Typography>
-            <QuantityField
-              label="Quant."
-              type="number"
-              value={quantity}
-              onChange={(event) => setQuantity(+event.target.value)}
-              inputProps={{
-                min: 1,
-                step: 1,
-              }}
-            />
-          </Box>
-          <Typography
-            className={styles.productDescription}
-            sx={{
               fontSize: '1rem',
-              height: '4.25rem',
               color: theme.palette.text.primary,
             }}
           >
-            {description}
+            {Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }).format(price)}
           </Typography>
-        </CardContent>
-        <CardActions sx={{ mt: 4, p: 4, justifyContent: 'center' }}>
-          <Button
-            onClick={() => addToCart()}
-            color="success"
-            variant="outlined"
-            endIcon={<IoMdCart />}
-            sx={{ fontWeight: 'bold' }}
-          >
-            Add to cart
-          </Button>
-        </CardActions>
-      </Card>
-    </Grid>
+          <QuantityField
+            label="Quant."
+            type="number"
+            value={quantity}
+            onChange={(event) => setQuantity(+event.target.value)}
+            inputProps={{
+              min: 1,
+              step: 1,
+            }}
+          />
+        </Box>
+        <Typography
+          className={styles.productDescription}
+          sx={{
+            fontSize: '1rem',
+            height: '4.25rem',
+            color: theme.palette.text.primary,
+          }}
+        >
+          {description}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ mt: 4, p: 4, justifyContent: 'center' }}>
+        <Button
+          onClick={() => addToCart()}
+          color="success"
+          variant="outlined"
+          endIcon={<IoMdCart />}
+          sx={{ fontWeight: 'bold' }}
+        >
+          Add to cart
+        </Button>
+      </CardActions>
+    </Card>
   );
 }

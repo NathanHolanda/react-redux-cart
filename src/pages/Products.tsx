@@ -1,7 +1,7 @@
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
+import BasicLayout from '../components/BasicLayout';
 import ProductCard from '../components/ProductCard';
 import Spinner from '../components/Spinner';
 import getProducts from '../services/getProducts';
@@ -22,17 +22,17 @@ export default function Products() {
   }, [getProducts]);
 
   return (
-    <>
-      <Navbar />
-      <Container
-        component="main"
-        sx={{
-          p: '4rem',
-        }}
+    <BasicLayout>
+      <Grid
+        m="auto"
+        justifyContent="center"
+        container
+        columnSpacing={6}
+        rowSpacing={6}
       >
-        <Grid m="auto" justifyContent="center" container spacing={2}>
-          {products.length > 0 ? (
-            products.map((product) => (
+        {products.length > 0 ? (
+          products.map((product) => (
+            <Grid item>
               <ProductCard
                 key={product.id}
                 id={product.id}
@@ -41,14 +41,14 @@ export default function Products() {
                 price={product.price}
                 thumbnail={product.thumbnail}
               />
-            ))
-          ) : (
-            <Box display="flex" justifyContent="center" mt="10rem">
-              <Spinner />
-            </Box>
-          )}
-        </Grid>
-      </Container>
-    </>
+            </Grid>
+          ))
+        ) : (
+          <Box display="flex" justifyContent="center" mt="10rem">
+            <Spinner />
+          </Box>
+        )}
+      </Grid>
+    </BasicLayout>
   );
 }
