@@ -41,7 +41,10 @@ export const cartSlice = createSlice({
       }
 
       firebaseApi
-        .put('/cart.json', { total: state.total, products: state.products })
+        .put('/cart.json', {
+          total: state.total > 0 ? state.total : null,
+          products: state.products,
+        })
         .catch((err) => {
           throw err;
         });
@@ -53,7 +56,7 @@ export const cartSlice = createSlice({
         (product) => product.id === id
       );
 
-      if (existingProductIndex > 0)
+      if (existingProductIndex >= 0)
         state.products.splice(existingProductIndex, 1, action.payload);
       else state.products.push(action.payload);
 

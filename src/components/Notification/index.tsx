@@ -1,18 +1,22 @@
-import { Alert } from '@mui/material';
+import { Snackbar, AlertColor, Alert } from '@mui/material';
 import { useState } from 'react';
 
-export default function index() {
-  const [hidden, setHidden] = useState<boolean>(false);
+type NotificationProps = { type: AlertColor; message: string };
+
+export default function index({ type, message }: NotificationProps) {
+  const [open, setOpen] = useState<boolean>(true);
 
   return (
-    <Alert
-      hidden={hidden}
-      severity="success"
+    <Snackbar
+      open={open}
+      autoHideDuration={3000}
       onClose={() => {
-        setHidden(true);
+        setOpen(false);
       }}
     >
-      This is a success alert — check it out!
-    </Alert>
+      <Alert variant="filled" severity={type} sx={{ width: '100%' }}>
+        {message}
+      </Alert>
+    </Snackbar>
   );
 }

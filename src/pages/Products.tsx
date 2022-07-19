@@ -32,9 +32,8 @@ export default function Products() {
       >
         {products.length > 0 ? (
           products.map((product) => (
-            <Grid item>
+            <Grid item key={product.id}>
               <ProductCard
-                key={product.id}
                 id={product.id}
                 title={product.title}
                 description={product.description}

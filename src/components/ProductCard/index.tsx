@@ -78,7 +78,7 @@ export default function ProductCard({
     };
 
     dispatch(actions.insertCartProduct(product));
-  }, [actions.insertCartProduct]);
+  }, [quantity]);
 
   return (
     <Card
