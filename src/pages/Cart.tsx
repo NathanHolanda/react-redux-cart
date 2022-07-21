@@ -5,10 +5,12 @@ import BasicLayout from '../components/BasicLayout';
 import CartProductCard from '../components/CartProductCard';
 import CartTotalPrice from '../components/CartTotalPrice';
 import Spinner from '../components/Spinner';
+import Notification from '../components/Notification';
 import useAppDispatch from '../hooks/useAppDispatch';
 import useAppSelector from '../hooks/useAppSelector';
 import { actions } from '../store';
 import { CartState, selectCart } from '../store/slices/cartSlice';
+import { selectNotification } from '../store/slices/notificationSlice';
 
 export default function Cart() {
   const dispatch = useAppDispatch();
@@ -26,10 +28,29 @@ export default function Cart() {
     setCart(cartState);
   }, [cartState]);
 
+  const notificationState = useAppSelector(selectNotification);
+
   const theme = useTheme();
 
   return (
     <BasicLayout>
+      {notificationState.requested && (
+        <Notification type="info" message="Product is being removed." />
+      )}
+
+      {notificationState.done ? (
+        notificationState.error ? (
+          <Notification type="error" message="Error while removing product." />
+        ) : (
+          <Notification
+            type="success"
+            message="Product was removed successfully."
+          />
+        )
+      ) : (
+        ''
+      )}
+
       {!cart.isFetched ? (
         <Box display="flex" justifyContent="center" mt="10rem">
           <Spinner />

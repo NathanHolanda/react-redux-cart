@@ -14,8 +14,12 @@ import { grey } from '@mui/material/colors';
 import { useCallback, useState } from 'react';
 import { IoMdCart } from 'react-icons/io';
 import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import { selectCart } from '../../store/slices/cartSlice';
 import { actions } from '../../store';
 import styles from './styles.module.css';
+import firebaseApi from '../../services/firebaseApi';
+import { handleInsertCartProduct } from '../../store/actions/cartActions';
 
 type ProductCardProps = {
   id: number;
@@ -65,7 +69,11 @@ export default function ProductCard({
 
   const dispatch = useAppDispatch();
 
-  const addToCart = useCallback(() => {
+  const cart = useAppSelector(selectCart);
+
+  const addToCart = useCallback(async () => {
+    dispatch(actions.setRequestedNotification());
+
     const subtotal = quantity * price;
 
     const product = {
@@ -77,8 +85,36 @@ export default function ProductCard({
       subtotal,
     };
 
-    dispatch(actions.insertCartProduct(product));
-  }, [quantity]);
+    const products = [...cart.products];
+
+    const existingProductIndex = products.findIndex(
+      (product) => product.id === id
+    );
+
+    if (existingProductIndex >= 0)
+      products.splice(existingProductIndex, 1, product);
+    else products.push(product);
+
+    const total = products.reduce((accum, product) => {
+      accum += product.subtotal;
+
+      return accum;
+    }, 0);
+
+    try {
+      await firebaseApi.put('/cart.json', { total, products });
+
+      dispatch(
+        handleInsertCartProduct({
+          newTotal: total,
+          newProduct: product,
+          existingProductIndex,
+        })
+      );
+    } catch (err) {
+      dispatch(actions.setErrorNotification());
+    }
+  }, [quantity, cart, actions.setErrorNotification]);
 
   return (
     <Card

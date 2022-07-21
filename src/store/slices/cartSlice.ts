@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '..';
-import firebaseApi from '../../services/firebaseApi';
 
 export type Product = {
   id: number;
@@ -28,49 +27,18 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     removeCartProduct: (state, action) => {
-      const { id } = action.payload;
-
-      const filterById = (product: Product) => product.id === id;
-
-      const itemToBeRemoved = state.products.find(filterById);
-      const itemIndexToBeRemoved = state.products.findIndex(filterById);
-
-      if (itemToBeRemoved) {
-        state.total -= itemToBeRemoved.subtotal;
-        state.products.splice(itemIndexToBeRemoved, 1);
-      }
-
-      firebaseApi
-        .put('/cart.json', {
-          total: state.total > 0 ? state.total : null,
-          products: state.products,
-        })
-        .catch((err) => {
-          throw err;
-        });
+      state.total = action.payload.newTotal;
+      state.products.splice(action.payload.productIndex, 1);
     },
     insertCartProduct: (state, action) => {
-      const { id } = action.payload;
-
-      const existingProductIndex = state.products.findIndex(
-        (product) => product.id === id
-      );
-
-      if (existingProductIndex >= 0)
-        state.products.splice(existingProductIndex, 1, action.payload);
-      else state.products.push(action.payload);
-
-      state.total = state.products.reduce((accum, product) => {
-        accum += product.subtotal;
-
-        return accum;
-      }, 0);
-
-      firebaseApi
-        .put('/cart.json', { total: state.total, products: state.products })
-        .catch((err) => {
-          throw err;
-        });
+      state.total = action.payload.newTotal;
+      if (action.payload.existingProductIndex >= 0)
+        state.products.splice(
+          action.payload.existingProductIndex,
+          1,
+          action.payload.newProduct
+        );
+      else state.products.push(action.payload.newProduct);
     },
     setCartInitialState: (state, action) => {
       state.products = action.payload.products;
